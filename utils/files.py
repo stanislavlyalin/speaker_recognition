@@ -3,6 +3,8 @@ import glob
 import re
 import pandas as pd
 
+# в указанной директории dir находит все wav-файлы и возвращает их в виде
+# списка структур с полями {filepath, user_id, gender, age, record_id}
 def files(dir):
     gender_dict = {'male': 0, 'female': 1}
     age_dict = {'youth': 0, 'adult': 1, 'senior': 2}

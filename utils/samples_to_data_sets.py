@@ -1,5 +1,8 @@
 import numpy as np
 
+# разбивает исходный сигнал samples на блоки по data_set_len отсчётов,
+# а затем в каждом блоке упорядочивает данные столбиком с n входными
+# значениями и одним выходным
 def samples_to_data_sets(samples, data_set_len, n):
     data_sets = []
 
