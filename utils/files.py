@@ -1,6 +1,7 @@
 import os
 import glob
 import re
+import pandas as pd
 
 def files(dir):
     gender_dict = {'male': 0, 'female': 1}
@@ -20,4 +21,4 @@ def files(dir):
         except:
             pass
 
-    return filelist
+    return pd.DataFrame(filelist)
