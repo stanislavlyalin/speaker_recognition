@@ -9,6 +9,8 @@ def make_data_set(files, train_count, callback):
     train_set = np.array([])
     test_set = np.array([])
 
+    user_counter = 0
+
     # группировка по столбцу 1 - ID диктора
     for user, user_files_ids in files.groupby(1).groups.items():
 
@@ -22,13 +24,15 @@ def make_data_set(files, train_count, callback):
             sample_rate, samples = read(file_path)
 
             features = callback(samples, sample_rate)
-            sample = np.hstack((features, user_file_id))
+            sample = np.hstack((features, user_counter))
 
             if user_file_id == user_files_ids[records_count-1]:
                 test_set = np.hstack((test_set, sample))
             else:
                 train_set = np.hstack((train_set, sample))
 
-        print('\rprocessed user %d' % user, end='')
+        user_counter += 1
 
-    return train_set.reshape((-1, records_count)), test_set.reshape((-1, records_count))
+        print('\rprocessed user %d' % user_counter, end='')
+
+    return train_set.reshape((-1, len(sample))), test_set.reshape((-1, len(sample)))
