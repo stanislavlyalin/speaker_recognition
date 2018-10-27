@@ -1,7 +1,7 @@
 from scipy.io.wavfile import read
 import numpy as np
 
-def make_data_set(files, train_count, callback):
+def make_data_set(files, user_count, train_count, callback):
     
     # +1 - это один файл для тестирования
     records_count = train_count + 1
@@ -34,5 +34,8 @@ def make_data_set(files, train_count, callback):
         user_counter += 1
 
         print('\rprocessed user %d' % user_counter, end='')
+
+        if user_counter >= user_count:
+            break
 
     return train_set.reshape((-1, len(sample))), test_set.reshape((-1, len(sample)))
