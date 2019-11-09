@@ -2,18 +2,13 @@
 
 import sys
 import numpy as np
-from .common import spectrogram
+from .common import spectrogram, bin_to_hz
 from statsmodels.stats.weightstats import DescrStatsW
 
 
 # перевод частоты из герц в бины
 def hz_to_bin(f, fft_size, sample_rate):
     return f * fft_size // sample_rate
-
-
-# перевод частоты из бин в герцы
-def bin_to_hz(f, fft_size, sample_rate):
-    return f * sample_rate / fft_size
 
 
 # генератор кусочков спектрограммы
