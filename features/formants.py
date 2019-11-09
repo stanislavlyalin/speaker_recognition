@@ -34,11 +34,17 @@ def sp_generator(sp, bandwidth, min_formants_duration):
     for i in range(len(envelope) - 1):
         if envelope[i] < threshold and envelope[i+1] > threshold:
             b = i + 1
-        elif envelope[i] > threshold and envelope[i+1] < threshold:
+        elif (envelope[i] > threshold and envelope[i+1] < threshold):
             e = i + 1
 
             if e - b + 1 >= min_formants_duration:
-                yield sp[b:e, :], b, envelope[b:e+1].argmax(), envelope[b:e+1]
+                yield sp[b:e+1, :], b, envelope[b:e+1].argmax(), envelope[b:e+1]
+
+    if e < b:
+        e = len(envelope) - 2
+
+        if e - b + 1 >= min_formants_duration:
+            yield sp[b:e+1, :], b, envelope[b:e+1].argmax(), envelope[b:e+1]
 
 
 # функция поиска оптимальной дельты
@@ -122,7 +128,7 @@ def formant_features(samples, sample_rate):
         piece_positions = np.empty((0, formants_count))
 
         # движемся вверх
-        for i in range(max_index, -1, -1):
+        for i in range(max_index - 1, -1, -1):
             positions = best_position(
                 sp_piece[i], positions, min_bin, max_bin, formants_count)
             piece_positions = np.vstack((positions, piece_positions))
