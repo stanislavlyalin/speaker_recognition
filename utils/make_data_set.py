@@ -23,7 +23,14 @@ def make_data_set(files, user_count_limit, train_count, callback):
             file_path = files.iloc[user_file_id, 0]
             sample_rate, samples = read(file_path)
 
-            features = callback(samples, sample_rate)
+            try:
+                features = callback(samples, sample_rate)
+            except:
+                print(file_path)
+
+            if np.isnan(features).any() or np.isinf(features).any():
+                print(file_path)
+
             sample = np.hstack((features, user_counter))
 
             if user_file_id == user_files_ids[records_count-1]:
