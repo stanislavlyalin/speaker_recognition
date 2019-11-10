@@ -32,7 +32,7 @@ def pitch_periodicity(samples, sample_rate):
             b = block[:N * p].reshape((-1, p))
 
             # находим среднюю корреляцию строк
-            correlations = [np.corrcoef(b[l], b[l + 1])[0, 1] for l in range(len(b) - 1)]
+            correlations = np.nan_to_num([np.corrcoef(b[l], b[l + 1])[0, 1] for l in range(len(b) - 1)])
             if len(correlations) > 0:
                 mean_corrs.append(np.mean(correlations))
 
